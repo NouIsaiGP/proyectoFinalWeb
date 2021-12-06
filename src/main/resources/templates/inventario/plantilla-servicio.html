@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <table th:fragment="tabla" class="d-none">
+        <tbody id="plantillaItemServicio">
+            <tr id="row_{ID}">
+                <td class="d-none"><input type="hidden" value="{ID}" name="ser_id[]"></td>
+                <td>{NOMBRE}</td>
+                <td>{DESCRIP}</td>
+                <td>{COSTO}</td>
+                <td><a href="#" class="btn btn-danger btn-sm" onclick="itemsHelperServicio.eliminarServicio({ID});">x</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

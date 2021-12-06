@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+    <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+    <div class="container py-4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${text}"></div>
+            <div class="card-body">
+
+                <nav th:replace="layout/layout-admin :: mensajes"></nav>
+                <ul class="list-group">
+                    <li class="list-group-item active" th:text="'Molde Pantalon'"></li>
+                    <li class="list-group-item" th:text="${'Nombre: ' + molde.nombre}"></li>
+                    <li class="list-group-item" th:text="${'Ancho de Cadera: ' + molde.anchoCadera}"></li>
+                    <li class="list-group-item" th:text="${'Largo de Tiro: ' + molde.largoTiro}"></li>
+                    <li class="list-group-item" th:text="${'Avance de Tiro: ' + molde.avanceTiro}"></li>
+                    <li class="list-group-item" th:text="${'Entrada desde la Cintura: ' + molde.entradaCintura}"></li>
+                    <li class="list-group-item" th:text="${'Cuarto de Cintura: ' + molde.cuartoCintura}"></li>
+                    <li class="list-group-item" th:text="${'Largo de Rodilla: ' + molde.largoRodilla}"></li>
+                    <li class="list-group-item" th:text="${'Largo de Pantalon: ' + molde.largoPantalon}"></li>
+                    <li class="list-group-item" th:text="${'Contorno de Rodilla: ' + molde.contornoRodilla}"></li>
+                    <li class="list-group-item" th:text="${'Contorno de Tobillo: ' + molde.contornoTobillo}"></li>
+                    <li class="list-group-item active" th:text="'Parte Trasera del Pantalon'"></li>
+                    <li class="list-group-item" th:text="${'Contorno de Cintura: ' + molde.contornoCinturaPT}"></li>
+                    <li class="list-group-item" th:text="${'Avance de Tiro: ' + molde.avanceTiroPT}"></li>
+                    <li class="list-group-item" th:text="${'Sale de Costado: ' + molde.saleCostadoPT}"></li>
+                    <li class="list-group-item" th:text="${'Largo de pinza: ' + molde.largoPinza}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

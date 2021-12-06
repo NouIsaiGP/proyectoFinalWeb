@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Registrar Tela</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+	
+	<hr for=""></hr>
+
+
+	<div class="container">
+
+		<div th:object="${tela}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+				role="alert">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+
+		<form class="form-group" th:action="@{/tela/form}" th:object="${tela}" method="post"
+			enctype="multipart/form-data">
+
+			<div class="input-group mb-3 row g-3 align-items-center">
+				<div class="col-auto">
+					<input type="text" class="form-control"
+						placeholder="Nombre de Tela" th:field="*{nombre}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+				</div>
+
+				<div class="col-auto">
+					<input type="number"  maxlength="5" class="form-control"
+						placeholder="Costo por rollo" th:field="*{costo}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('costo')}" th:errors="*{costo}"></small>
+				</div>
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Color"
+						th:field="*{color}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></small>
+				</div>
+			</div>
+
+			<hr>
+
+
+			<div class="input-group mb-3 row g-3 align-items-center">
+				<div class="col-auto">
+					<select id="disabledSelect" class="form-select form-control"
+						th:field="*{ancho}">
+						<option th:value="'150'">150 cm</option>
+						<option th:value="'160'">160 cm</option>
+						<option th:value="'170'">170 cm</option>
+					</select> <small class="form-text text-danger"
+						th:if="${#fields.hasErrors('ancho')}" th:errors="*{ancho}"></small>
+				</div>
+
+				<div class="col-auto">
+					<input type="number" maxlength="3" class="form-control"
+						placeholder="Largo en metros" th:field="*{largo}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('largo')}" th:errors="*{largo}"></small>
+				</div>
+
+				<div class="col-auto">
+					<input type="number" maxlength="3" class="form-control"
+						placeholder="Cantidad" th:field="*{cantidad}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></small>
+				</div>
+
+			</div>
+
+			<hr>
+
+			<input type="hidden" th:value="0" th:field="*{enable}">
+
+			<div class="input-group mb-3">
+				<div class="col-auto">
+					<button  class="btn btn-success" type="submit" id="button-addon1">
+						<i class="far fa-save"></i> Guardar
+					</button>
+				</div>
+
+			</div>
+		</form>
+
+	</div>
+	
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Registrar Servicio</h1>
+	</div>
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+	<hr for=""></hr>
+
+
+	<!-- FORM -->
+
+	<div class="container">
+
+		<div th:object="${servicio}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+				role="alert">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+
+		<form th:action="@{/servicio/form}" th:object="${servicio}"
+			method="post" enctype="multipart/form-data">
+
+			<div class="input-group mb-3 row g-3 align-items-center">
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Contacto"
+						th:field="*{contacto}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('contacto')}" th:errors="*{contacto}"></small>
+				</div>
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Telefono"
+						th:field="*{telefono}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+				</div>
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Costo Pieza"
+						th:field="*{costo}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('costo')}" th:errors="*{costo}"></small>
+				</div>
+			</div>
+
+			<div class="input-group mb-3 row g-3 align-items-center">
+
+				<div class="col-auto">
+					<select id="disabledSelect" class="form-select form-control"
+					th:field="*{tipo.id}">
+						<option th:value="1">Corte</option>
+						<option th:value="2">Costura</option>
+						<option th:value="3">Corte y Costura</option>
+						<option th:value="4">Planchado</option>
+						<option th:value="5">Lavado</option>
+						<option th:value="6">Deslavado</option>
+						<option th:value="7">Adornado</option>
+						<option th:value="8">Terminado</option>
+					</select>
+				</div>
+			</div>
+			<div class="input-group mb-3 row g-3 align-items-center">
+
+				<div class="col-auto">
+					<textarea class="form-control" placeholder="Descripcion"
+						th:field="*{descripcion}" th:errorclass="'form-control alert-danger'"></textarea>
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
+				</div>
+
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-auto">
+					<button class="btn btn-success" type="submit" id="button-addon1">
+						<i class="far fa-save"></i> Guardar
+					</button>
+				</div>
+			</div>
+		</form>
+
+
+	</div>
+	<!--===== MAIN JS =====-->
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>
+</html>

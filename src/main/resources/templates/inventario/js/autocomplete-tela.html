@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <script type="text/javascript" th:fragment="buscar-tela">
+        var cont2 = 0;
+
+        $(document).ready(function () {
+            
+
+            $("#buscar_tela").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/inventario/cargar-tela/" + request.term,
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.id,
+                                    label: item.nombre,
+                                    cantidad: item.cantidad,
+                                    costo: item.costo,
+                                };
+                            }));
+                        },
+                    });
+                },
+                select: function (event, ui) {
+                    //$("buscar_tela").val(ui.item.label);
+                    cont2++;
+                    console.log("cont2 " + cont2);
+
+                    if (itemsHelperTela.hasProducto(ui.item.value)) {
+                        itemsHelperTela.incrementaCantidadTela(ui.item.value);
+                        return false;
+                    }
+
+                    if (cont2 <= 1) {
+                        var linea = $("#plantillaItemTela").html();
+                        linea = linea.replace(/{ID}/g, ui.item.value);
+                        linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+                        linea = linea.replace(/{DISPONIBLE}/g, ui.item.cantidad);
+                        linea = linea.replace(/{COSTO}/g, ui.item.costo);
+
+                        $("#cargarTelas tbody").append(linea);
+                    }
+
+                    
+
+                    return false;
+                }
+            });
+
+            $("form").submit(function () {
+                $("#plantillaItemTela").remove();
+                return;
+            });
+        });
+
+        var itemsHelperTela = {
+            hasProducto: function (id) {
+
+                var resultado = false;
+
+                $('input[name="tela_id[]"]').each(function () {
+                    if (parseInt(id) == parseInt($(this).val())) {
+                        resultado = true;
+                    }
+                });
+
+                return resultado;
+            },
+            incrementaCantidadTela: function (id) {
+                var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0;
+                $("#cantidad_" + id).val(++cantidad);
+            },
+            eliminarTela: function (id) {
+                cont2 = 0;
+                $("#row_" + id).remove();
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

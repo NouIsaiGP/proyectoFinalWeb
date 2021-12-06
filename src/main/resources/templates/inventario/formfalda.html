@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body id="body-pd">
+
+    <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+    <div class="container py4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/inventario/formfalda}" th:object="${prenda}" method="post">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="'Nombre'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="nombre" id="nombre" class="form-control" th:field="*{nombre}">
+                        </div>
+                    </div>
+
+                    <nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+                    <hr>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="'Buscar Telas'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="buscar_tela" id="buscar_tela" class="form-control">
+                        </div>
+                    </div>
+
+                    <table th:replace="inventario/plantila-tela :: tabla"></table>
+                    <table id="cargarTelas" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Costo</th>
+                                <th>Disponibles</th>
+                                <th>Cantidad de Rollos</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="'Buscar Servicios'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="buscar_servicio" id="buscar_servicio" class="form-control">
+                        </div>
+                    </div>
+
+                    <table th:replace="inventario/plantilla-servicio :: tabla"></table>
+                    <table id="cargarServicios" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Descripcion</th>
+                                <th>Costo PZA.</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="'Buscar Avios'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="buscar_avio" id="buscar_avio" class="form-control">
+                        </div>
+                    </div>
+
+                    <table th:replace="inventario/plantilla-avio :: tabla"></table>
+                    <table id="cargarAvios" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Costo</th>
+                                <th>Disponibles</th>
+                                <th>Cantidad por prenda</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="'Buscar Molde'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="buscar_falda" id="buscar_falda" class="form-control">
+                        </div>
+                    </div>
+
+                    <table th:replace="inventario/plantilla-falda :: tabla"></table>
+                    <table id="cargarFalda" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}"
+								class="btn btn-secondary" />
+						</div>
+					</div>
+
+                </form>
+
+            </div>
+        </div> 
+
+    </div>
+
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+    <script th:replace="inventario/js/autocomplete-tela :: buscar-tela"></script>
+    <script th:replace="inventario/js/autocomplete-servicio :: buscar-servicio"></script>
+    <script th:replace="inventario/js/autocomplete-avio :: buscar-avio"></script>
+    <script th:replace="inventario/js/autocomplete-falda :: buscar-falda"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Ganancias</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+	<hr/>
+
+	<div class="container">
+
+
+        <div class="container">
+            <form th:action="@{/ventas/lote}" method="get" class="input-group mb-3">
+    
+                <div class="col-auto">
+                    <select name="keyword" class="form-select form-control">
+                        <option th:value="'original'">original</option>
+                        <option th:value="'compra'">compra</option>
+                    </select>
+                </div>
+                
+                <input type="hidden" value="0" name="page">
+                
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-user-edit"></i>Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+		<label></label>
+
+		<table class="table table-bordered">
+
+			<thead class="table-dark">
+				<tr>
+					<th class="text-center" scope="col">Nombre Producto</th>
+					<th class="text-center" scope="col">Tipo</th>
+					<th class="text-center" scope="col">Meta</th>
+					<th class="text-center" scope="col">Cantidad</th>
+					<th class="text-center" scope="col">Ventas</th>
+					<th class="text-center" scope="col">Ganancias</th>
+                    <th class="text-center" scope="col">Precio Actual</th>
+				</tr>
+			</thead>
+            <span th:each="l: ${lotes}">
+                <tbody class="table-light">
+                    <tr>
+                        <td class="text-center" th:text="${l.nombre}"></td>
+                        <td class="text-center" th:text="${l.tipo}"></td>
+                        <td class="text-center" th:text="${l.costoInicial}"></td>
+                        <td class="text-center" th:text="${l.cantidad}"></td>
+                        <td class="text-center" th:text="${l.ventas}"></td>
+                        <td class="text-center" th:text="${l.ganancias}"></td>
+                        <td class="text-center" th:text="${l.costoVenta}"></td>
+                    </tr>
+                </tbody>
+            </span>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+
+	</div>
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>

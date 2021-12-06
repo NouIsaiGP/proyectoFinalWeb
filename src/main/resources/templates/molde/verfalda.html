@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body >
+
+    <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+    <div class="container py-4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${text}"></div>
+            <div class="card-body">
+
+                <nav th:replace="layout/layout-admin :: mensajes"></nav>
+                <ul class="list-group">
+                    <li class="list-group-item active" th:text="'Molde Falda'"></li>
+                    <li class="list-group-item" th:text="${'Nombre: ' + molde.nombre}"></li>
+                    <li class="list-group-item" th:text="${'Largo: ' + molde.largoFalda}"></li>
+                    <li class="list-group-item" th:text="${'Ancho: ' + molde.anchoFalda}"></li>
+                    <li class="list-group-item" th:text="${'Cuarto de Cintura: ' + molde.cuartoCintura}"></li>
+                    <li class="list-group-item" th:text="${'Aumento de Pinza: ' + molde.aumentoPinza}"></li>
+                    <li class="list-group-item" th:text="${'Curva de Cintura: ' + molde.curvaCintura}"></li>
+                    <li class="list-group-item" th:text="${'Largo de Cadera: ' + molde.largoCadera}"></li>
+                    <li class="list-group-item" th:text="${'Cuarto de Cadera: ' + molde.cuartoCadera}"></li>
+                    <li class="list-group-item" th:text="${'Curva Costado: ' + molde.curvaCostado}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

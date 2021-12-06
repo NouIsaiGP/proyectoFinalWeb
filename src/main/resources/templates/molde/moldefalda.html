@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+  <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+  <div class="container" style="text-align: center">
+    <h1 style="color: rgb(17, 18, 19); font-weight: 700">Molde Falda</h1>
+  </div>
+
+  <nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+  <hr />
+
+  <div th:object="${falda}" th:remove="tag">
+    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+      <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+    </ul>
+  </div>
+
+  <form th:action="@{/molde/moldefalda}" th:object="${falda}" method="post" enctype="multipart/form-data">
+
+	<input type="hidden" th:field="*{id}">
+
+    <div class="container" style="
+        position: relative;
+        width: 800px;
+        height: 500px;
+        top: 20px;
+        left: 60px;
+      ">
+      <div class="input-group mb-3 row g-3 align-items-center">
+        <div class="col-auto">
+
+          <label class="campos">1/4 de Contorno de Cadera (Rangos  15-26.5 )</label>
+          <input type="number" required step="any" class="form-control campos" placeholder="1/4 de Contorno de Cadera"
+            th:field="*{cuartoCadera}" th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('cuartoCadera')}"
+            th:errors="*{cuartoCadera}"></small>
+
+          <label class="campos">Largo de Cadera (Rangos  18-25 )</label>
+          <input type="number" required step="any" class="form-control campos" placeholder="Largo de Cadera"
+            th:field="*{largoCadera}" th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('largoCadera')}"
+            th:errors="*{largoCadera}"></small>
+
+        </div>
+        <div class="col-auto">
+          <label class="campos">Largo de Falda (Rangos  45-65 )</label>
+          <input type="number" required step="any" class="form-control campos" placeholder="Largo de Falda"
+            th:field="*{largoFalda}" th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('largoFalda')}"
+            th:errors="*{largoFalda}"></small>
+
+          <label class="campos">Ancho de Pinza (Rangos  2-5 )</label>
+          <input type="number" required step="any" class="form-control campos" placeholder="Ancho de Pinza"
+            th:field="*{aumentoPinza}" th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('aumentoPinza')}"
+            th:errors="*{aumentoPinza}"></small>
+        </div>
+        <div class="col-auto">
+          <label class="campos">1/4 de Contorno de Cintura (Rangos  21.7-32.3 )</label>
+          <input type="number" required step="any" class="form-control campos" placeholder="1/4 de Contorno de Cintura"
+            th:field="*{cuartoCintura}" th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('cuartoCintura')}"
+            th:errors="*{cuartoCintura}"></small>
+        </div>
+        <div class="col-auto">
+          <label class="campos">Nombre del Molde</label>
+          <input name="nombre" type="text" required class="form-control campos" placeholder="Falda XS..." th:field="*{nombre}"
+            th:errorclass="'form-control alert-danger'" />
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+        </div>
+      </div>
+
+      <label for=""></label>
+      <div class="input-group mb-3">
+        <div class="col-auto">
+          <a type="button" class="btn btn-secondary" th:href="@{/molde/moldes}"><i class="fas fa-arrow-left"></i>
+            Atras</a>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Guardar</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <!--===== MAIN JS =====-->
+
+  <footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>

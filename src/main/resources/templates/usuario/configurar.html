@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/css/style2.css" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: black;">
+        <div class="container-fluid">
+            <img src="/images/LOGOS.png" alt="logo" width="30px" height="40px">
+            <a class="navbar-brand" href="#">Prenda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/index}">Home</a>
+                    </li>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                            <a class="nav-link active" aria-current="page" href="#"
+                                onclick="document.getElementById('logoutForm').submit();" type="submit">Cerrar
+                                sesion</a>
+                        </form>
+                    </li>
+            </div>
+            <a class="btn btn-dark" style="float: right;" th:href="@{/usuario/carrito}"> 
+                <i class="fas fa-cart-plus" style="color: aliceblue;"></i>
+            </a>
+        </div>
+    </nav>
+
+    <nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+    <form action="" th:action="@{/usuario/configurar}" th:object="${usuario}" method="post">
+        <div class="container">
+            <div class="row row-cols-3">
+                <div class="col">
+                    <input type="text" class="form-control" id="disabledInput" th:field="*{username}" disabled>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="disabledInput" th:field="*{email}" disabled>
+                </div>
+                <hr>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Calle y Numero" id="floatingTextarea"
+                            th:field="*{calle}"></input>
+                        <label for="floatingTextarea">Calle y numero</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" maxlength="5" class="form-control" placeholder="Codigo Postal"
+                            id="floatingTextarea" th:field="*{postal}"></input>
+                        <label for="floatingTextarea">Codigo Postal</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Colonia" id="floatingTextarea"
+                            th:field="*{colonia}"></input>
+                        <label for="floatingTextarea">Colonia</label>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" maxlength="10" class="form-control" placeholder="Telefono"
+                            id="floatingTextarea" th:field="*{telefono}"></input>
+                        <label for="floatingTextarea">Telefono</label>
+                    </div>
+                </div>
+
+                <div class="col"></div><div class="col"></div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" maxlength="16" class="form-control" placeholder="Numero de Tarjeta"
+                            id="floatingTextarea" th:field="*{tarjeta}"></input>
+                        <label for="floatingTextarea">Numero de tarjeta</label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="password" maxlength="3" class="form-control"
+                            placeholder="Codigo de seguridad" id="floatingTextarea" th:field="*{ccv}"></input>
+                        <label for="floatingTextarea">Codigo de seguridad</label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Fecha de caducidad"
+                            id="floatingTextarea" th:field="*{cad}"></input>
+                        <label for="floatingTextarea">Fecha de caducidad (mm-yyyy)</label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <button type="submit" class="form-control btn btn-warning" Guardar><i class="fas fa-save">Guardar</i></button>
+                        <label for="floatingTextarea">Fecha de caducidad</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+        crossorigin="anonymous"></script>
+
+    <script src="/js/main.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+	<div class="container" style="text-align: center">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700">Moldes</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+	<hr />
+
+	<div class="container">
+		<h1 style="color: rgb(93, 93, 192)">Falda</h1>
+
+		<form th:action="@{/molde/buscar/falda}" class="input-group mb-3">
+		<input type="text" name="keyword" id="keyword">
+		<input type="hidden" name="page" id="" value="0">
+		<input type="hidden" name="page2" id="" value="0"> 
+		<div class="col-auto">
+			<button class="btn btn-primary" type="submit">
+				<i class="fas fa-search"></i>Buscar
+			</button>
+		</div>
+		</form>
+
+
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">Nombre</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Opciones</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+				</tr>
+			</thead>
+			<tbody class="table-light">
+				<tr th:each="falda: ${faldas}">
+					<td th:text="${falda.nombre}"></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-primary btn-xs"
+						th:href="@{/molde/moldefalda/} + ${falda.id}" th:text="'Editar'"></a>
+					</td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-danger btn-xs"
+						th:href="@{/molde/moldes/eliminarf/} + ${falda.id}"
+						th:text="'Eliminar'"
+						onclick="return confirm('Estas seguro que quieres eliminar?');"></a>
+					</td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-info btn-xs" th:href="@{/molde/ver/} + ${falda.id}"
+						th:text="'Ver'"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+
+		<!-- TABLA PANTALONES -->
+
+		<h1 style="color: rgb(93, 93, 192)">Pantalon</h1>
+		<form th:action="@{/molde/buscar/pantalon}" class="input-group mb-3">
+			<input type="text" name="keyword" id="keyword">
+			<input type="hidden" name="page" id="" value="0">
+            <input type="hidden" name="page2" id="" value="0"> 
+	
+			<div class="col-auto">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-search"></i>Buscar
+				</button>
+			</div>
+			</form>
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">Nombre</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Opciones</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+				</tr>
+			</thead>
+			<tbody class="table-light">
+				<tr th:each="pantalon: ${pantalones}">
+					<td th:text="${pantalon.nombre}"></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-primary btn-xs"
+						th:href="@{/molde/moldepantalon/} + ${pantalon.id}"
+						th:text="'Editar'"></a></td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-danger btn-xs"
+						th:href="@{/molde/moldes/eliminarp/} + ${pantalon.id}"
+						th:text="'Eliminar'"
+						onclick="return confirm('Estas seguro que quieres eliminar?');"></a>
+					</td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-info btn-xs"
+						th:href="@{/molde/ver/} + ${pantalon.id}" th:text="'Ver'"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator2"></nav>
+
+		<form th:action="@{/molde/mover}" method="get">
+
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="keyword"
+					value="falda" id="flexRadioDefault1" checked /> <label
+					class="form-check-label" for="flexRadioDefault1"> Falda </label>
+			</div>
+
+			<label for=""></label>
+
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="keyword"
+					value="pantalon" id="flexRadioDefault1" /> <label
+					class="form-check-label" for="flexRadioDefault1"> Pantalon
+				</label>
+			</div>
+
+			<label for=""></label>
+
+			<div class="input-group mb-3">
+				<div class="col-auto">
+					<button class="btn btn-danger" type="submit" id="button-addon1">
+						<i class="fas fa-trash-alt"></i> Eliminar
+					</button>
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-success">
+						<i class="fas fa-arrow-right"></i> Siguiente
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--===== MAIN JS =====-->
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Ventas</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+	<hr for="">
+	</hr>
+
+	<div class="container">
+
+		<form th:action="@{/ventas/buscar}" method="get">
+			<div class="col-auto">
+				<input name="keyword" type="text" class="form-control" placeholder="Buscar...">
+			</div>
+
+			<div class="col-auto">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-user-edit"></i>Buscar
+				</button>
+			</div>
+		</form>
+
+		<table class="table table-bordered">
+
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">Nombre de Usuario</th>
+					<th scope="col">Cantidad</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Fecha de compra</th>
+					<th scope="col">Total</th>
+					<th scope="col">Estado</th>
+					<th scope="col">Comprobando</th>
+					<th scope="col">Enviando</th>
+					<th scope="col">Recibido</th>
+
+				</tr>
+			</thead>
+			<span th:each="v: ${ventas}"> <span
+				th:each="p: ${v.productos}">
+			<tbody class="table-light">
+				<tr>
+					<td th:text="${v.usuario.username}"></td>
+					<td th:text="${p.cantidad}"></td>
+					<td th:text="${p.precio}"></td>
+					<td th:text="${v.fechaYHora}"></td>
+					<td th:text="${v.total}"></td>
+					<td th:text="${v.estado}"></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-warning btn-xs"
+						th:href="@{/venta/comprobar/} + ${v.id}" th:text="'Comprobar'"></a></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-secondary btn-xs"
+						th:href="@{/venta/enviado/} + ${v.id}" th:text="'Enviado'"></a></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-success btn-xs"
+						th:href="@{/venta/recibido/} + ${v.id}" th:text="'Recibido'"></a></td>
+				</tr>
+			</tbody>
+			</span>
+			</span>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+
+
+	</div>
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+
+
+</body>
+
+</html>

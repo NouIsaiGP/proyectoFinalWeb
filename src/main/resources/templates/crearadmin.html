@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body id="body-pd">
+	<header th:replace="layout/layout-admin :: header"></header>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Registrar
+			Administrador</h1>
+	</div>
+
+	<div th:replace="layout/layout-admin :: mensajes"></div>
+
+	<hr />
+	<div class="container">
+		<form th:action="@{/crear/admin}" class="sign-up-form" method="post">
+			<h2 class="title">Registrate</h2>
+			<div class="input-field">
+				<i class="fas fa-user"></i> <input required name="user" type="text"
+					placeholder="Nombre de usuario" />
+			</div>
+			<hr>
+			<div class="input-field">
+				<i class="fas fa-envelope"></i> <input required name="email"
+					type="email" placeholder="Email" />
+			</div>
+			<hr>
+			<div class="input-field">
+				<i class="fas fa-lock"></i> <input required name="password"
+					type="password" placeholder="Contraseña" />
+			</div>
+			<hr>
+			<button type="submit" class="btn btn-info" >Registrar</button>
+		</form>
+	</div>
+
+
+	<!--===== MAIN JS =====-->
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

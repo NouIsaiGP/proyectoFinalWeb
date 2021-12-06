@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+    <div class="container">
+    <main layout:fragment="contenido">
+        <div class="col-12">
+            <h2>Productos</h2>
+            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                th:text="${mensaje}" class="alert">
+            </div>
+            <a class="btn btn-success mb-2" th:href="@{/productos/agregar}">Agregar</a>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Precio</th>
+                            <th>Existencia</th>
+                            <th>Producto</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="producto : ${productos}">
+                            <td th:text="${producto.nombre}"></td>
+                            <td th:text="${producto.codigo}"></td>
+                            <td th:text="${producto.precio}"></td>
+                            <td th:text="${producto.existencia}"></td>
+                            <td><img th:if="${#strings.length(producto.foto) > 0}" style="max-width: 25%;"
+                                    th:src="@{'/productos/mostrar/up/' + ${producto.foto}}"
+                                    th:alt="${producto?.foto}" /></td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-warning" th:href="@{/productos/editar/} + ${producto.id}">Editar <i
+                                        class="fa fa-edit"></i></a>
+                            </td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:action="@{/productos/eliminar}" method="post">
+                                    <input type="hidden" name="id" th:value="${producto.id}" />
+                                    <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav th:replace="paginator-nav :: paginator"></nav>
+            </div>
+        </div>
+    </main>
+</div>
+
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>

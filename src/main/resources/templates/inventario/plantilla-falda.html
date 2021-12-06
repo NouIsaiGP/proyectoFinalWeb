@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <table th:fragment="tabla" class="d-none">
+        <tbody id="plantillaItemFalda">
+            <tr id="row_{ID}">
+                <td class="d-none"><input type="hidden" value="{ID}" name="falda_id[]"></td>
+                <td>{NOMBRE}</td>
+                </td>
+                <td><a href="#" class="btn btn-danger btn-sm" onclick="itemsHelperFalda.eliminarFalda({ID});">x</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

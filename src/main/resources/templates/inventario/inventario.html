@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+    <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+    <div class="container" style="text-align: center;">
+        <h1 style="color: rgb(17, 18, 19); font-weight: 700;">Inventario</h1>
+    </div>
+
+    <div th:replace="layout/layout-admin :: mensajes"></div>
+
+    <hr />
+
+    
+
+    <div class="container">
+
+
+
+        <div class="">
+
+            <h1 style="color: rgb(93, 93, 192);">Tela</h1>
+
+            <!-- Tabla Tela-->
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center"scope="col">Nombre</th>
+                        <th class="text-center"scope="col">Largo</th>
+                        <th class="text-center"scope="col">Ancho</th>
+                        <th class="text-center"scope="col">Costo</th>
+                        <th class="text-center"scope="col">Color</th>
+                        <th class="text-center"scope="col">Rollos</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr th:each="tela: ${telas}">
+                        <td class="text-center"th:text="${tela.nombre}"></td>
+                        <td class="text-center"th:text="${tela.largo}"></td>
+                        <td class="text-center"th:text="${tela.ancho}"></td>
+                        <td class="text-center"th:text="${tela.costo}"></td>
+                        <td class="text-center"th:text="${tela.color}"></td>
+                        <td class="text-center"th:text="${tela.cantidad}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:replace="paginator-nav :: paginator2"></nav>
+
+            <!-- Tabla Avios-->
+
+            <h1 style="color: rgb(93, 93, 192);">Avios</h1>
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center"scope="col">Nombre</th>
+                        <th class="text-center"scope="col">Tipo</th>
+                        <th class="text-center"scope="col">Color</th>
+                        <th class="text-center"scope="col">Cantidad</th>
+                        <th class="text-center"scope="col">Costo</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+
+                    <tr th:each="avio: ${avios}">
+                        <td class="text-center"th:text="${avio.nombre}"></td>
+                        <td class="text-center"th:text="${avio.tipo}"></td>
+                        <td class="text-center"th:text="${avio.color}"></td>
+                        <td class="text-center"th:text="${avio.cantidad}"></td>
+                        <td class="text-center"th:text="${avio.costo}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:replace="paginator-nav :: paginator"></nav>
+
+            <!-- Tabla Prenda-->
+
+            <h1 style="color: rgb(93, 93, 192);">Prenda</h1>
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center"scope="col">Tipo</th>
+                        <th class="text-center"scope="col">Nombre</th>
+                        <th class="text-center"scope="col">Cantidad</th>
+                        <th class="text-center"scope="col">Precio Pza.</th>
+                        <th class="text-center"scope="col">Costo Total</th>
+                        <th class="text-center"scope="col">Fecha</th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">Info</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr th:each="prenda: ${prendas}">
+                        <td class="text-center"th:text="${prenda.tipo}"></td>
+                        <td class="text-center"th:text="${prenda.nombre}"></td>
+                        <td class="text-center"th:text="${prenda.cantidad}"></td>
+                        <td class="text-center"th:text="${prenda.precio}"></td>
+                        <td class="text-center"th:text="${prenda.costo}"></td>
+                        <td class="text-center"th:text="${prenda.fecha}"></td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-info btn-xs"
+                                th:href="@{/inventario/ver/} + ${prenda.id}" th:text="'Ver'"></a></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:replace="paginator-nav :: paginator3"></nav>
+
+
+
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <form th:action="@{/inventario/buscar}" method="get">
+                    <div class="col-sm">
+                        <select name="mes" class="form-select form-control ">
+                            <option th:value="01">Enero</option>
+                            <option th:value="02">Febrero</option>
+                            <option th:value="03">Marzo</option>
+                            <option th:value="04">Abril</option>
+                            <option th:value="05">Mayo</option>
+                            <option th:value="06">Junio</option>
+                            <option th:value="07">Julio</option>
+                            <option th:value="08">Agosto</option>
+                            <option th:value="09">Septiembre</option>
+                            <option th:value="10">Octubre</option>
+                            <option th:value="11">Noviembre</option>
+                            <option th:value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <label for=""></label>
+
+                    <div class="col-sm">
+                        <select name="año" class="form-select form-control">
+                            <option th:value="2020">2020</option>
+                            <option th:value="2021">2021</option>
+                            <option th:value="2022">2022</option>
+                        </select>
+                    </div>
+                    <label for=""></label>
+
+                    <div class="col-sm">
+                        <button class="btn btn-primary" type="submit" id="button-addon1"><i class="fas fa-search"></i>
+                            Buscar
+                            prenda
+                        </button>
+                    </div>
+                </form>
+                <form class="container" th:action="@{/inventario/mover}" method="get">
+
+
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="keyword" value="falda"
+                                id="flexRadioDefault1" checked /> <label class="form-check-label"
+                                for="flexRadioDefault1"> Falda </label>
+                        </div>
+                    </div>
+
+                    <label for=""></label>
+
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="keyword" value="pantalon"
+                                id="flexRadioDefault1" /> <label class="form-check-label" for="flexRadioDefault1">
+                                Pantalon
+                            </label>
+                        </div>
+                    </div>
+
+                    <label for=""></label>
+
+                    <div class="row">
+                        <button class="btn btn-success " type="submit" id="button-addon1"><i class="fas fa-save"></i>
+                            Crear
+                            prenda </button>
+                    </div>
+
+                </form>
+
+                <div style="position: absolute; width: 300px; height: 200px; right: 0;">
+                    <img src="/images/images.png" alt="">
+                </div>
+            </div>
+
+        </div>
+
+        <footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

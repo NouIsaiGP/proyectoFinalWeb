@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Molde
+			Pantalon</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+	<hr />
+
+	<div class="container"
+		style="position: relative; width: 1000px; height: 500px; top: 3px; left: 30px;">
+
+		<div th:object="${pantalon}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+				role="alert">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+
+		<form th:action="@{/molde/moldepantalonpt}" th:object="${pantalon}"
+			method="get" enctype="multipart/form-data">
+
+				<input type="hidden" th:field="*{id}"/>
+				<input type="hidden" th:field="*{avanceTiroPT}"/>
+				<input type="hidden" th:field="*{contornoCinturaPT}"/>
+				<input type="hidden" th:field="*{largoPinza}"/>
+				<input type="hidden" th:field="*{saleCostadoPT}"/>
+
+			<div class="form-group row">
+				<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+				<div class="col-sm-6">
+					<input required name="nombre" type="text" th:field="*{nombre}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="anchoCadera" class="col-sm-2 col-form-label">Ancho
+					de cadera (21 - 38)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{anchoCadera}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('anchoCadera')}"
+						th:errors="*{anchoCadera}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="largoTiro" class="col-sm-2 col-form-label">Largo
+					de Tiro (22 -29)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{largoTiro}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('largoTiro')}"
+						th:errors="*{largoTiro}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="avanceTiro" class="col-sm-2 col-form-label">Avance de Tiro (5 - 9)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{avanceTiro}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('avanceTiro')}"
+						th:errors="*{avanceTiro}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="entradaCintura" class="col-sm-2 col-form-label">Entrada de Cintura (3 - 5.4)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{entradaCintura}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('entradaCintura')}"
+						th:errors="*{entradaCintura}"></small>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="cuartoCintura" class="col-sm-2 col-form-label">Cuarto de Cintura (17 - 31)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{cuartoCintura}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('cuartoCintura')}"
+						th:errors="*{cuartoCintura}"></small>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="largoRodilla" class="col-sm-2 col-form-label">Largo hasta la Rodilla (57 - 65)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{largoRodilla}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('largoRodilla')}"
+						th:errors="*{largoRodilla}"></small>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="largoPantalon" class="col-sm-2 col-form-label">Largo de Pantalon (104 - 112)</label>
+				<div class="col-sm-6">
+					<input  required type="number" step="any" maxlength="6"
+						th:field="*{largoPantalon}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('largoPantalon')}"
+						th:errors="*{largoPantalon}"></small>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="contornoRodilla" class="col-sm-2 col-form-label">Contorno de Rodilla (10 - 18)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{contornoRodilla}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('contornoRodilla')}"
+						th:errors="*{contornoRodilla}"></small>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="contornoTobillo" class="col-sm-2 col-form-label">Contorno de Tobillo (9.5 - 16.5)</label>
+				<div class="col-sm-6">
+					<input required type="number" step="any" maxlength="6"
+						th:field="*{contornoTobillo}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('contornoTobillo')}"
+						th:errors="*{contornoTobillo}"></small>
+				</div>
+			</div>
+
+			<label for=""></label>
+			<div class="input-group mb-3">
+				<div class="col-auto">
+					<a type="button" class="btn btn-secondary"
+						th:href="@{/molde/moldes}"><i class="fas fa-arrow-left"></i>
+						Atras</a>
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-success"
+						><i
+						class="fas fa-arrow-right"></i> Siguiente</button>
+				</div>
+
+			</div>
+		</form>
+
+
+
+
+	</div>
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body >
+    
+<table th:fragment="tabla" class="d-none">
+    <tbody id="plantilla">
+        <tr id="row_{ID}">
+            <td class="d-none"><input type="hidden" value="{ID}" name="id[]"></td>
+            <td>{NOMBRE}</td>
+            <td>{PRECIO}</td>
+            <input type="hidden" value="{FOTO}" name="foto" id="foto">
+            <td><img style="max-width: 25%;" src="https://gestor-prenda-heroku.herokuapp.com/productos/mostrar/up/{FOTO}"/></td>
+        <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <td><input type="number" value="1" name="cantidadProducto[]"
+					id="cantidad_{ID}" class="form-control col-sm-4" onchange="itemsHelper.calcularImporte({ID}, {PRECIO}, this.value);"/></td>
+				<td><span id="total_importe_{ID}">0</span></td>
+                <td><a href="#" class="btn btn-danger btn-sm" onclick="itemsHelper.eliminar({ID});">x</a>
+                </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+
+</html>

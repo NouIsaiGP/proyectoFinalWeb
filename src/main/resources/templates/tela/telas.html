@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+
+<body>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Telas</h1>
+	</div>
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+	<hr for=""></hr>
+	<!-- <a th:href="@{'/tel/noe'(format=json)}">JSON</a> -->
+
+	<!-- Form -->
+	
+	<div class="container">
+		<form th:action="@{/tela/listar}" method="get"
+			class="input-group mb-3">
+
+			<div class="col-auto">
+				<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/tela/form}"
+					class="btn btn-success" id="button-addon1"><i
+					class="far fa-save"></i> Crear</a>
+			</div>
+
+			
+
+			<div class="col-auto">
+                <input name="keyword" type="text" class="form-control" placeholder="Buscar...">
+            </div>
+            
+			<input type="hidden" value="0" name="page">
+
+			<div class="col-auto">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-user-edit"></i>Buscar
+				</button>
+			</div>
+		</form>
+	</div>
+	<!-- Tabla -->
+	<div class="container">
+
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">Nombre</th>
+					<th scope="col">Largo</th>
+					<th scope="col">Ancho</th>
+					<th scope="col">Costo</th>
+					<th scope="col">Color</th>
+					<th scope="col">Cantidad de Rollos</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Opciones</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+				</tr>
+			</thead>
+			<tbody class="table-light">
+				<tr th:each="tela: ${telas}">
+					<td class="text-center"th:text="${tela.nombre}"></td>
+					<td class="text-center"th:text="${tela.largo}"></td>
+					<td class="text-center"th:text="${tela.ancho}"></td>
+					<td class="text-center"th:text="${tela.costo}"></td>
+					<td class="text-center"th:text="${tela.color}"></td>
+					<td class="text-center"th:text="${tela.cantidad}"></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-primary btn-xs"
+						th:href="@{/tela/form/} + ${tela.id}" th:text="'Editar'"></a></td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-danger btn-xs"
+						th:href="@{/tela/eliminar/} + ${tela.id}" th:text="'Eliminar'"
+						onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+	</div>
+
+	<!--===== MAIN JS =====-->
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/css/style2.css" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+</head>
+
+<body id="body-pd">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: black;">
+        <div class="container-fluid">
+            <img src="/images/LOGOS.png" alt="logo" width="30px" height="40px">
+            <a class="navbar-brand" href="#">Prenda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/index}">Home</a>
+                    </li>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                            <a class="nav-link active" aria-current="page" href="#"
+                                onclick="document.getElementById('logoutForm').submit();" type="submit">Cerrar
+                                sesion</a>
+                        </form>
+                    </li>
+            </div>
+            <a class="btn btn-dark" style="float: right;" th:href="@{/usuario/carrito}">
+                <i class="fas fa-cart-plus" style="color: aliceblue;"></i>
+            </a>
+        </div>
+    </nav>
+
+    
+
+    <div class="container py4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+
+                <form th:action="@{/usuario/comprar}" th:object="${producto}" method="post">
+
+                    
+
+                    <nav th:replace="layout/layout-admin :: mensajes"></nav>
+
+                    <hr />
+
+                    <div class="form-group row">
+                        <label class="" th:text="'Buscar Producto'"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="buscar_pro" id="buscar_pro" class="form-control">
+                        </div>
+                    </div>
+
+                    <table th:replace="usuario/plantilla-producto :: tabla"></table>
+                    <table id="cargar" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="form-group row">
+                        <button class="float-right btn btn-secondary" type="submit">Comprar</button>
+                    </div>
+                    
+                    
+
+                    <h5 class="float-right">
+                        Total <span name="total" id="gran_total" th:text="${total}"
+                            class="badge badge-secondary"></span>
+                    </h5>
+
+                    
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+   
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+    <script th:replace="usuario/js/autocomplete-producto :: buscar-pro"></script>
+
+</body>
+
+</html>

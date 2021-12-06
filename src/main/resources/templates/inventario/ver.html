@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+    <nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+    <div class="container py-4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${text}"></div>
+            <div class="card-body">
+
+                <nav th:replace="layout/layout-admin :: mensajes"></nav>
+                <ul class="list-group">
+                    <li class="list-group-item active" th:text="${prenda.tipo}"></li>
+                    <li class="list-group-item" th:text="${ 'Nombre: ' + prenda.nombre}"></li>
+                    <li class="list-group-item" th:text="${ 'Cantidad Total: ' + prenda.cantidad}"></li>
+                    <li class="list-group-item" th:text="${ 'Precio: ' + prenda.precio}"></li>
+                    <li class="list-group-item" th:text="${ 'Costo Total: ' + prenda.costo}"></li>
+                    <li class="list-group-item" th:text="${ 'Fecha de creacion: ' + prenda.fecha}"></li>
+                </ul>
+                <h3>Servicios usados</h3>
+                <table class="table table-bordered table-striped my-4">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Servicio</th>
+                            <th>Descripcion</th>
+                            <th>Telefono</th>
+                            <th>Contacto</th>
+                            <th>Costo por Pieza</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="servicio : ${servicios}">
+                            <td th:text="${servicio?.tipo?.nombre}"></td>
+                            <td th:text="${servicio?.descripcion}"></td>
+                            <td th:text="${servicio?.telefono}"></td>
+                            <td th:text="${servicio?.contacto}"></td>
+                            <td th:text="${servicio?.costo}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Avios usados</h3>
+
+                <table class="table table-bordered table-striped my-4">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Color</th>
+                            <th>Costo por Pieza</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <span th:each="pren : ${avios}">
+                            <tr>
+                                <td th:text="${pren?.nombre}"></td>
+                                <td th:text="${pren?.tipo}"></td>
+                                <td th:text="${pren?.color}"></td>
+                                <td th:text="${pren?.costo}"></td>
+                                <td th:text="${pren?.cantidad}"></td>
+                            </tr>
+                        </span>
+                    </tbody>
+                </table>
+
+                <h3>Telas usadas</h3>
+
+                <table class="table table-bordered table-striped my-4">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Largo</th>
+                            <th>Ancho</th>
+                            <th>Costo</th>
+                            <th>Color</th>
+                            <th>Rollos Usados</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${tela.nombre}"></td>
+                            <td th:text="${tela.largo}"></td>
+                            <td th:text="${tela.ancho}"></td>
+                            <td th:text="${tela.costo}"></td>
+                            <td th:text="${tela.color}"></td>
+                            <td th:text="${rollos}"></td>
+                        </tr>
+
+                        <!-- <span th:each="lis : ${list}">
+                            <span th:each="pr : ${lis.prenda}">
+                                <span th:each="pren : ${lis.tela}">
+                                    <span th:each="tela : ${telas}">
+                                        <tr>
+                                            <td th:text="${tela.nombre}"></td>
+                                            <td th:text="${tela.largo}"></td>
+                                            <td th:text="${tela.ancho}"></td>
+                                            <td th:text="${tela.costo}"></td>
+                                            <td th:text="${tela.color}"></td>
+                                            <td th:text="${pr.cantidadTela}"></td>
+                                        </tr>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    -->
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+
+        <br><br><br>
+
+        <div class="card bg-light">
+            <div class="card-header" th:text="'Poner a la venta'" style="color: #111;
+             font-family: 'Open Sans Condensed', sans-serif; font-size: 34px; 
+             font-weight: 700; line-height: 64px; margin: 0 0 0; 
+            padding: 20px 30px; text-align: center; 
+            text-transform: uppercase;"></div>
+            <div class="card-body">
+                <form class="form-group" th:object="${producto}" th:action="@{/productos/original}" method="post" enctype="multipart/form-data">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control"
+                        th:field="*{nombre}" required id="nombre" placeholder="Nombre del producto">
+                        <label for="nombre">Nombre del producto </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" th:field="*{codigo}" id="codigo"
+                            placeholder="Escribe el codigo de barras, para su busqueda">
+                        <label for="codigo">Escribe las etiquetas para su busqueda </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input required th:field="*{precio}" autocomplete="off" type="number" class="form-control" id="precio"
+                            placeholder="Precio">
+                        <label for="precio">Precio del producto</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Foto</label>
+                        <input required autocomplete="off" name="file" placeholder="Foto del producto" type="file"
+                            class="form-control">
+                    </div>
+
+                    <input type="hidden" name="total" id="total" th:value="${prenda.costo}">
+                    <input type="hidden" name="existencias" id="existencias" th:value="${prenda.cantidad}">
+<br><br>
+                    <div class="form-group">
+                    <button class="btn btn-success" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

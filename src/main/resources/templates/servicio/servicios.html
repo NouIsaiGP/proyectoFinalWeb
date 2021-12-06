@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout-admin :: head"></head>
+
+<body>
+
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Servicios</h1>
+	</div>
+
+	<nav th:replace="layout/layout-admin :: mensajes"></nav>
+	
+	<hr/>
+
+
+	<!-- Form -->
+
+	<div class="container">
+		<form th:action="@{/servicio/listar}" method="get"
+			class="input-group mb-3">
+
+			<div class="col-auto">
+				<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/servicio/form}"
+					class="btn btn-success" id="button-addon1"><i
+					class="far fa-save"></i> Crear</a>
+			</div>
+
+
+
+			<div class="col-auto">
+				<input name="keyword" type="text" class="form-control"
+					placeholder="Buscar...">
+			</div>
+
+			<input type="hidden" value="0" name="page">
+
+			<div class="col-auto">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-user-edit"></i>Buscar
+				</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- Tabla -->
+
+	<div class="container">
+
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th class="text-center" scope="col">Tipo de Servicio</th>
+					<th class="text-center" scope="col">Descripcion</th>
+					<th class="text-center" scope="col">Telefono</th>
+					<th class="text-center" scope="col">Contacto</th>
+					<th class="text-center" scope="col">Costo Pza</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Opciones</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+				</tr>
+			</thead>
+			<tbody class="table-light">
+				<tr th:each="servicio: ${servicios}">
+					<td class="text-center" th:text="${servicio.tipo.nombre}"></td>
+					<td class="text-center" th:text="${servicio.descripcion}"></td>
+					<td class="text-center" th:text="${servicio.telefono}"></td>
+					<td class="text-center" th:text="${servicio.contacto}"></td>
+					<td class="text-center" th:text="${servicio.costo}"></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-primary btn-xs"
+						th:href="@{/servicio/editar/} + ${servicio.id}" th:text="'Editar'"></a></td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-danger btn-xs"
+						th:href="@{/servicio/eliminar/} + ${servicio.id}" th:text="'Eliminar'"
+						onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+	</div>
+
+	<!--===== MAIN JS =====-->
+
+	<footer th:replace="layout/layout-admin :: footer"></footer>
+
+</body>
+
+</html>

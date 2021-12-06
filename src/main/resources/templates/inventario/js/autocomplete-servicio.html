@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <script type="text/javascript" th:fragment="buscar-servicio">
+
+        $(document).ready(function () {
+
+            $("#buscar_servicio").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/inventario/cargar-servicio/" + request.term,
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.id,
+                                    label: item.tipo.nombre,
+                                    descripcion: item.descripcion,
+                                    costo: item.costo,
+                                };
+                            }));
+                        },
+                    });
+                },
+                select: function (event, ui) {
+                    //$("buscar_tela").val(ui.item.label);
+
+                    var linea = $("#plantillaItemServicio").html();
+                    linea = linea.replace(/{ID}/g, ui.item.value);
+                    linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+                    linea = linea.replace(/{DESCRIP}/g, ui.item.descripcion);
+                    linea = linea.replace(/{COSTO}/g, ui.item.costo);
+
+                    $("#cargarServicios tbody").append(linea);
+
+                    return false;
+                }
+            });
+
+            $("form").submit(function () {
+                $("#plantillaItemServicio").remove();
+                return;
+            });
+
+        });
+
+        var itemsHelperServicio = {
+            hasProducto: function (id) {
+
+                var resultado = false;
+
+                $('input[name="ser_id[]"]').each(function () {
+                    if (parseInt(id) == parseInt($(this).val())) {
+                        resultado = true;
+                    }
+                });
+
+                return resultado;
+            },
+            incrementaCantidad: function (id, precio) {
+                var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0;
+                $("#cantidad_" + id).val(++cantidad);
+                this.calcularImporte(id, precio, cantidad);
+            },
+            eliminarServicio: function (id) {
+                $("#row_" + id).remove();
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <script type="text/javascript" th:fragment="buscar-falda">
+        var cont = 0;
+
+        $(document).ready(function () {
+            
+
+            $("#buscar_falda").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/inventario/cargar-falda/" + request.term,
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.id,
+                                    label: item.nombre,
+                                };
+                            }));
+                        },
+                    });
+                },
+                select: function (event, ui) {
+                    //$("buscar_tela").val(ui.item.label);
+                    cont++;
+                    console.log("cont " + cont)
+
+                    if (cont <= 1) {
+                        var linea = $("#plantillaItemFalda").html();
+                        linea = linea.replace(/{ID}/g, ui.item.value);
+                        linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+                        $("#cargarFalda tbody").append(linea);
+                    }
+
+
+                    return false;
+                }
+            });
+
+            $("form").submit(function () {
+                $("#plantillaItemFalda").remove();
+                return;
+            });
+
+        });
+
+        var itemsHelperFalda = {
+            hasProducto: function (id) {
+
+                var resultado = false;
+
+                $('input[name="falda_id[]"]').each(function () {
+
+                    if (parseInt(id) == parseInt($(this).val())) {
+                        resultado = true;
+                    }
+                });
+
+                return resultado;
+            },
+            eliminarFalda: function (id) {
+                cont = 0;
+                $("#row_" + id).remove();
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

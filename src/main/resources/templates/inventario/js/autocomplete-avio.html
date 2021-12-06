@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <script type="text/javascript" th:fragment="buscar-avio">
+
+        $(document).ready(function () {
+
+            $("#buscar_avio").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/inventario/cargar-avio/" + request.term,
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.id,
+                                    label: item.nombre,
+                                    tipo: item.tipo,
+                                    cantidad: item.cantidad,
+                                    costo: item.costo,
+                                };
+                            }));
+                        },
+                    });
+                },
+                select: function (event, ui) {
+                    //$("buscar_tela").val(ui.item.label);
+
+                    if (itemsHelperAvio.hasProducto(ui.item.value)) {
+                        itemsHelperAvio.incrementaCantidadAvio(ui.item.value);
+                        return false;
+                    }
+
+                    var linea = $("#plantillaItemAvio").html();
+                    linea = linea.replace(/{ID}/g, ui.item.value);
+                    linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+                    linea = linea.replace(/{TIPO}/g, ui.item.tipo);
+                    linea = linea.replace(/{DISPONIBLE}/g, ui.item.cantidad);
+                    linea = linea.replace(/{COSTO}/g, ui.item.costo);
+
+                    $("#cargarAvios tbody").append(linea);
+
+                    return false;
+                }
+            });
+
+            $("form").submit(function () {
+                $("#plantillaItemAvio").remove();
+                return;
+            });
+
+        });
+
+        var itemsHelperAvio = {
+            hasProducto: function (id) {
+
+                var resultado = false;
+
+                $('input[name="avio_id[]"]').each(function () {
+                    if (parseInt(id) == parseInt($(this).val())) {
+                        resultado = true;
+                    }
+                });
+
+                return resultado;
+            },
+            incrementaCantidadAvio: function (id) {
+                var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0;
+                $("#cantidad_" + id).val(++cantidad);
+            },
+            eliminarAvio: function (id) {
+                $("#row_" + id).remove();
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
